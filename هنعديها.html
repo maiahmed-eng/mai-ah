@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حكاية ميوش وعمر 💚❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: background 1s;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* الشاشة السودا البداية */
+        #start-screen {
+            display: block;
+        }
+
+        #start-btn {
+            background: linear-gradient(45deg, #ff3366, #33cc33);
+            border: none;
+            color: white;
+            padding: 20px 40px;
+            font-size: 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 51, 102, 0.7);
+            transition: transform 0.3s;
+        }
+
+        #start-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* شاشة الباسورد */
+        #password-screen {
+            display: none;
+        }
+
+        #password-input {
+            padding: 15px;
+            font-size: 20px;
+            border: 2px solid #33cc33;
+            border-radius: 10px;
+            width: 250px;
+            text-align: center;
+            margin-bottom: 20px;
+            background: #111;
+            color: #fff;
+        }
+
+        /* نبضة القلب */
+        #heartbeat-screen {
+            display: none;
+        }
+
+        .heart-pulse {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #ff3366 30%, #33cc33 70%);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            position: relative;
+            animation: pulse 1.5s infinite;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 51, 102, 0.8);
+        }
+
+        .heart-pulse::after {
+            content: "المس قلبي يا عموري";
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ff3366;
+            font-size: 18px;
+            white-space: nowrap;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 20px #ff3366; }
+            50% { transform: scale(1.2); box-shadow: 0 0 40px #33cc33; }
+            100% { transform: scale(1); box-shadow: 0 0 20px #ff3366; }
+        }
+
+        /* القصيدة */
+        #poem-screen {
+            display: none;
+            background: linear-gradient(135deg, #0a3d0a, #1a1a1a);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #33cc33;
+        }
+
+        .poem-text {
+            font-size: 28px;
+            line-height: 2;
+            color: #ff3366;
+            margin-bottom: 30px;
+            min-height: 150px;
+        }
+
+        /* الرسائل */
+        #messages-screen {
+            display: none;
+            background: rgba(0,0,0,0.9);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid #ff3366;
+        }
+
+        .message-btn {
+            display: block;
+            width: 100%;
+            margin: 15px 0;
+            padding: 18px;
+            font-size: 20px;
+            background: linear-gradient(45deg, #ff3366, #33cc33);
+            border: none;
+            color: white;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 51, 102, 0.5);
+        }
+
+        /* زر "لا" الشقي */
+        #no-btn {
+            position: absolute;
+            background: linear-gradient(45deg, #ff6666, #ff3333);
+            padding: 15px 30px;
+            font-size: 22px;
+            border-radius: 50px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: 0.1s;
+            z-index: 1000;
+        }
+
+        #no-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* انفجار القلوب */
+        .heart-explosion {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff3366;
+            font-size: 30px;
+            animation: float 3s ease-out forwards;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+        }
+
+        /* النهاية */
+        #end-screen {
+            display: none;
+            font-size: 24px;
+            color: #33cc33;
+            margin-top: 30px;
+            text-shadow: 0 0 10px #33cc33;
+        }
+
+        /* الأغنية */
+        #music-player {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- الشاشة 1: البداية -->
+        <div id="start-screen">
+            <h1 style="margin-bottom: 30px; font-size: 32px; color: #33cc33;">حكاية حب 🍃</h1>
+            <button id="start-btn">دوس هنا يا صحبي 😎</button>
+        </div>
+
+        <!-- الشاشة 2: الباسورد -->
+        <div id="password-screen">
+            <h2 style="margin-bottom: 20px; color: #ff3366;">ادخل الباسورد يا عموري</h2>
+            <input type="text" id="password-input" placeholder="28-11-2008">
+            <div id="password-error" style="color: #ff3366; margin-top: 10px; display: none;">الباسورد غلط! 😔</div>
+        </div>
+
+        <!-- الشاشة 3: نبضة القلب -->
+        <div id="heartbeat-screen">
+            <div class="heart-pulse" id="heart"></div>
+        </div>
+
+        <!-- الشاشة 4: القصيدة -->
+        <div id="poem-screen">
+            <div class="poem-text" id="poem"></div>
+        </div>
+
+        <!-- الشاشة 5: الرسائل -->
+        <div id="messages-screen">
+            <h2 style="color: #ff3366; margin-bottom: 20px;">رسايل ميوش السرية 💌</h2>
+            <button class="message-btn" data-msg="1">هل هتفضل معايا يا عمر حتى لو تعبتك معايا؟</button>
+            <button class="message-btn" data-msg="2">حارب الدنيا كلها عشان نكون مع بعض يا موري 🥺</button>
+            <button class="message-btn" data-msg="3">بغير عليك من كل حد وأي حد يا عموري 😡❤️</button>
+            <button class="message-btn" data-msg="4">بدعيلك تحقق كل اللي بنحلم بيه يا روح ميوش</button>
+            <button id="no-btn" style="position: relative; margin-top: 20px;">لا</button>
+        </div>
+
+        <!-- الشاشة 6: النهاية -->
+        <div id="end-screen">
+            <p>Made with ❤️ by Mayoush for Omar</p>
+        </div>
+    </div>
+
+    <!-- عنصر انفجار القلوب -->
+    <div class="heart-explosion" id="hearts-container"></div>
+
+    <!-- مشغل الأغنية (استخدم رابط أغنية شيرين من مصدر مفتوح أو رفعها على سيرفر) -->
+    <audio id="song" loop>
+        <!-- استبدل الرابط برابط أغنية شيرين "كل حب الدنيا ديا" من مصدر قانوني -->
+        <source src="https://example.com/sherin-song.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // العناصر
+        const startScreen = document.getElementById('start-screen');
+        const passwordScreen = document.getElementById('password-screen');
+        const heartbeatScreen = document.getElementById('heartbeat-screen');
+        const poemScreen = document.getElementById('poem-screen');
+        const messagesScreen = document.getElementById('messages-screen');
+        const endScreen = document.getElementById('end-screen');
+        const startBtn = document.getElementById('start-btn');
+        const passwordInput = document.getElementById('password-input');
+        const passwordError = document.getElementById('password-error');
+        const heart = document.getElementById('heart');
+        const poem = document.getElementById('poem');
+        const messageBtns = document.querySelectorAll('.message-btn');
+        const noBtn = document.getElementById('no-btn');
+        const song = document.getElementById('song');
+        const heartsContainer = document.getElementById('hearts-container');
+
+        // قصيدة
+        const poemText = "لو مال قلبي عن هواك نزعتهُ.. وشريتُ قلباً في هواك يذوبُ.. لكن لي قلباً تملكه الهوى.. مَن قال إني عن هواك أتوبُ";
+
+        // بداية
+        startBtn.addEventListener('click', () => {
+            startScreen.style.display = 'none';
+            passwordScreen.style.display = 'block';
+        });
+
+        // الباسورد
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                if (passwordInput.value === '28-11-2008') {
+                    passwordScreen.style.display = 'none';
+                    heartbeatScreen.style.display = 'block';
+                } else {
+                    passwordError.style.display = 'block';
+                    setTimeout(() => passwordError.style.display = 'none', 2000);
+                }
+            }
+        });
+
+        // النبضة والتشغيل
+        heart.addEventListener('click', () => {
+            heartbeatScreen.style.display = 'none';
+            poemScreen.style.display = 'block';
+            poemScreen.style.background = 'linear-gradient(135deg, #0a3d0a, #1a1a1a)';
+            
+            // تشغيل الأغنية (يحتاج تفاعل المستخدم)
+            song.volume = 0.5;
+            song.play().catch(e => console.log("يجب تفعيل الصوت يدوياً في بعض المتصفحات"));
+
+            // كتابة الشعر حرف حرف
+            let i = 0;
+            const interval = setInterval(() => {
+                poem.textContent += poemText.charAt(i);
+                i++;
+                if (i >= poemText.length) clearInterval(interval);
+            }, 100);
+        });
+
+        // الانتقال للرسائل
+        setTimeout(() => {
+            poemScreen.style.display = 'none';
+            messagesScreen.style.display = 'block';
+            initNoButton();
+        }, 5000);
+
+        // زر "لا" الشقي
+        function initNoButton() {
+            noBtn.style.position = 'absolute';
+            
+            const moveNoButton = () => {
+                const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+                const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+                const randomX = Math.floor(Math.random() * maxX);
+                const randomY = Math.floor(Math.random() * maxY);
+                noBtn.style.left = randomX + 'px';
+                noBtn.style.top = randomY + 'px';
+            };
+
+            // يتحرك عند hover أو محاولة الضغط
+            noBtn.addEventListener('mouseenter', moveNoButton);
+            noBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                moveNoButton();
+            });
+
+            // إذا ضغط على "لا" عن طريق الخطأ (بعد تحريكه) يظهر رسالة
+            noBtn.addEventListener('click', () => {
+                alert('مافيش لا يا حبيبي! 😜');
+                moveNoButton();
+            });
+        }
+
+        // أزرار الرسائل
+        messageBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                createHearts();
+                btn.style.transform = 'scale(0.95)';
+                setTimeout(() => btn.style.transform = 'scale(1)', 200);
+            });
+        });
+
+        // انفجار القلوب
+        function createHearts() {
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                heartsContainer.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 3000);
+            }
+        }
+
+        // عند ضغط "أيوة" في الرسالة الأولى
+        messageBtns[0].addEventListener('click', () => {
+            setTimeout(() => {
+                createHearts();
+                document.body.style.background = 'linear-gradient(45deg, #ff3366, #33cc33)';
+                setTimeout(() => {
+                    document.body.style.background = '#000';
+                }, 3000);
+            }, 500);
+        });
+
+        // النهاية بعد آخر رسالة
+        setTimeout(() => {
+            messagesScreen.style.display = 'none';
+            endScreen.style.display = 'block';
+        }, 30000);
+    </script>
+</body>
+</html>
